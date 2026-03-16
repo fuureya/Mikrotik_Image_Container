@@ -6,24 +6,18 @@ if [ ! -c /dev/net/tun ]; then
     mknod /dev/net/tun c 10 200
 fi
 
-# Jalankan QEMU
-# Kita gunakan user-mode networking dengan hostfwd karena ini paling kompatibel dengan VPS (Host Mode).
-# List Port yang diteruskan:
-# 8291: Winbox
-# 2222 -> 22: SSH
-# 9865 -> 80: Webfig
-# 9443 -> 443: SSL (Diubah dari 443 karena bentrok)
-# 500/udp, 4500/udp, 1701/udp: L2TP/IPsec
-# 1723: PPTP
+# Jalankan QEMU dengan user-mode networking.
+# hostfwd di sini memetakan port dari Container ke VM Mikrotik.
+# Docker memetakan port dari Host ke Container.
 
 exec qemu-system-x86_64 \
     -m 256 \
     -drive file=mikrotik_disk.qcow2,format=qcow2 \
     -netdev user,id=n1,\
 hostfwd=tcp::8291-:8291,\
-hostfwd=tcp::2222-:22,\
-hostfwd=tcp::9865-:80,\
-hostfwd=tcp::9443-:443,\
+hostfwd=tcp::22-:22,\
+hostfwd=tcp::80-:80,\
+hostfwd=tcp::443-:443,\
 hostfwd=udp::500-:500,\
 hostfwd=udp::4500-:4500,\
 hostfwd=udp::1701-:1701,\
