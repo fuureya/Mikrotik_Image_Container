@@ -12,7 +12,7 @@ fi
 # 8291: Winbox
 # 2222 -> 22: SSH
 # 9865 -> 80: Webfig
-# 443 -> 443: SSL
+# 9443 -> 443: SSL (Diubah dari 443 karena bentrok)
 # 500/udp, 4500/udp, 1701/udp: L2TP/IPsec
 # 1723: PPTP
 
@@ -23,7 +23,7 @@ exec qemu-system-x86_64 \
 hostfwd=tcp::8291-:8291,\
 hostfwd=tcp::2222-:22,\
 hostfwd=tcp::9865-:80,\
-hostfwd=tcp::443-:443,\
+hostfwd=tcp::9443-:443,\
 hostfwd=udp::500-:500,\
 hostfwd=udp::4500-:4500,\
 hostfwd=udp::1701-:1701,\
