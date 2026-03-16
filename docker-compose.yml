@@ -4,9 +4,10 @@ services:
   mikrotik:
     build: .
     container_name: mikrotik_qemu
-    ports:
-      - "2222:22"
-      - "8291:8291"
-      - "5900:5900"
+    privileged: true
+    network_mode: host
+    cap_add:
+      - NET_ADMIN
+      - SYS_ADMIN
     stdin_open: true
     tty: true
